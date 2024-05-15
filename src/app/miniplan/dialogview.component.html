@@ -1,0 +1,40 @@
+<h1 mat-dialog-title>Plan erstellen</h1>
+<div mat-dialog-content>
+  <p>Bitte Daten eingeben</p>
+  <mat-form-field appearance="fill">
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="data.Name" />
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance="fill">
+    <mat-label>Start</mat-label>
+    <input matInput [matDatepicker]="pickerStart" [(ngModel)]="StartDatum">
+    <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+    <mat-datepicker #pickerStart></mat-datepicker>
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance="fill">
+    <mat-label>Ende</mat-label>
+    <input matInput [matDatepicker]="pickerEnde" [(ngModel)]="EndDatum">
+    <mat-datepicker-toggle matSuffix [for]="pickerEnde"></mat-datepicker-toggle>
+    <mat-datepicker #pickerEnde></mat-datepicker>
+  </mat-form-field>
+</div>
+<ng-container *ngIf="data.PlanArt===0">
+  <p>
+    <mat-slide-toggle #wWeise (change)="wWeiseChanged(wWeise.checked);">Wochenweise einteilen</mat-slide-toggle>
+  </p>
+  <p *ngIf="wWeise.checked">
+    <mat-form-field appearance="fill">
+      <mat-label>Woche einteilen, wie</mat-label>
+      <mat-select [(ngModel)]="data.DefaultMesseArt">
+        <mat-option *ngFor="let key of gdService.gd_Art_List_Key_Inst" [value]="key">{{gdService.gd_Art_List_Inst[key]?.Name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
+</ng-container>
+<div mat-dialog-actions>
+  <button mat-button (click)="onAbbrClick()">Abbrechen</button>
+  <button mat-button (click)="onOKClick()" cdkFocusInitial>OK</button>
+</div>

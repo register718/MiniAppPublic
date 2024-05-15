@@ -1,0 +1,53 @@
+<h2 class="ms-2">Gottesdienst Art</h2>
+  <form class="m-4" [formGroup]="art_form">
+    <!--Bootstrap timepicker-->
+      <mat-form-field>
+        <mat-label>Gottesdienstart</mat-label>
+        <mat-select #artSelect formControlName="id" (valueChange)="artSelectionChanged(artSelect.value);" e2elocator="art_id" >
+          <mat-option [value]="-1" e2elocator="art_id_neu" *ngIf="art_addPermission">*Neu</mat-option>
+          <mat-option *ngFor="let gd of gd_Art_List_Key" [value]="gd">{{gd_Art_List[gd].Name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput e2elocator="art_name" formControlName="Name" e2elocator="art_name" />
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <mat-label>Uhrzeit</mat-label>
+        <input e2elocator="art_uhr" type="text" placeholder="--:--" matInput formControlName="Zeit">
+      </mat-form-field>
+      <br>
+      <mat-form-field class="me-4">
+        <mat-label>Minis Insgesamt</mat-label>
+        <input matInput e2elocator="art_minis_gesamt" formControlName="MinisInsgesamt" type="number" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>davon Oberminis</mat-label>
+        <input matInput e2elocator="art_OberminisAnz" formControlName="OberminisAnzahl" type="number" />
+      </mat-form-field>
+      <p><mat-slide-toggle #jedewoche (change)="jedeWocheChanged(jedewoche.checked);" e2elocator="art_jedeWocheChecked">Jede Woche einteilen</mat-slide-toggle></p>
+      <p *ngIf="jedewoche.checked">
+      <mat-form-field appearance="fill">
+        <mat-label>Wochentag</mat-label>
+        <mat-select formControlName="DayOfWeek" e2elocator="art_DayOfWeek">
+          <mat-option [value]="0">Montag</mat-option>
+          <mat-option [value]="1">Dienstag</mat-option>
+          <mat-option [value]="2">Mittwoch</mat-option>
+          <mat-option [value]="3">Donnerstag</mat-option>
+          <mat-option [value]="4">Freitag</mat-option>
+          <mat-option [value]="5">Samstag</mat-option>
+          <mat-option [value]="6">Sonntag</mat-option>
+        </mat-select>
+      </mat-form-field>
+      </p>
+      <mat-form-field>
+        <mat-label>Printformat</mat-label>
+        <input matInput type="text" [placeholder]="gd_Art.Print" formControlName="Print" />
+      </mat-form-field>
+      <p><small>Leer lassen für Standardformat</small></p>
+      <p><button (click)="deleteMesseArt()" *ngIf="artSelect.value !== -1 && userService.has('api.delete_messeart')" mat-raised-button class="me-2" color="warn">Löschen</button>
+        <button e2elocator="art_btn_save" mat-raised-button (click)="gd_Art_speichern();" color="primary" *ngIf="(artSelect.value === -1 && art_addPermission) || (artSelect.value !== -1 && art_changePermission)">Speichern</button></p>
+    </form>
+

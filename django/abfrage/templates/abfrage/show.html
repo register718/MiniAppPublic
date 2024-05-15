@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load abfrage_extra %}
+{% block content %}
+<div class="container">
+    <h2>Miniplan {{abfrage.Plan.Name}}</h2>
+    {% if save %}
+        <div id="showInfo" class="card bg-info p-2 mb-2">
+            Speichern erfolgreich!
+        </div>
+        <script>
+            window.history.replaceState({}, document.title, location.protocol + '//' + location.host + location.pathname);
+
+            setTimeout(() => {  
+                document.getElementById("showInfo").style.display = "none";
+            }, 3000);
+        </script>
+    {% endif %}
+    <p>Hallo {{abfrage.Mini.user.first_name}}, wähle bitte alle Gottesdienste aus, an denen du ministrieren kannst</p>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="container-fulid">
+            <div class="row">
+                <div class="col-lg-6">
+                    {% for m in messen %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" {% if abfrage|eingeteilt:m %}checked{% endif %} name="{{m.id}}">
+                        <label class="form-check-label">
+                            {{m.Datum|date:"l d.m.Y"}}, um
+                            {% if m.Zeit == None %}
+                                {{m.Art.Zeit}}
+                            {% else %}
+                                {{m.Zeit}}
+                            {% endif %}
+                            {% if m.Info != "" and m.Info != None %}
+                            Info: {{m.Info}}
+                            {% endif %}
+                        </label>          
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text">Nachricht</span>
+                        <textarea class="form-control" aria-label="Nachricht" name="Nachricht"">{{abfrage.Nachricht}}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <p><button type="submit" class="btn btn-success mt-2">Abschicken</button></p>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

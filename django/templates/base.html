@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+        <title>Miniplan</title>
+        <link rel="icon" type="image/x-icon" href="/static/app/favicon.ico">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="robots" value="none noimageindex">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}" />
+        <script src="{% static 'bootstrap.min.js' %}"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #dddddd;">
+    <div class="container-fluid">
+        <a class="navbar-brand" style="color: black;" href="#">
+            Minis Betzigau
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+                  </svg>
+            </span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                {% if user.is_authenticated %}
+                    <a class="nav-link" aria-current="page" href="{% url 'app' %}">App</a>
+                {% else %}
+                    <a class="nav-link" aria-current="page" href="{% url 'login' %}">Login</a>
+                {% endif %}
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="{% url 'impressum' %}">Impressum/Datenschutzerklärung</a>
+              </li>
+            </ul>  
+        </div>    
+    </div>
+</nav>
+<noscript>
+    <p>Bitte aktivieren Sie Javascript</p>
+    <p>
+        {% if user.is_authenticated %}
+            <a href="{% url 'app' %}">App</a>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+    </p>
+    <p><a href="{% url 'impressum' %}">Impressum/Datenschutzerklärung</a></p>
+</noscript>
+<div class="container-fulid mt-4">
+    {% block content %}{% endblock %}
+</div>
+</body>
+</html>

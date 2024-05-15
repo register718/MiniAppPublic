@@ -1,0 +1,115 @@
+<div class="container overflowHScroll" style="overflow-x: hidden;">
+  <div class="row">
+    <div>
+      <h2>{{_selectedMini.first_name}} {{_selectedMini.last_name}}</h2>
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Vorname</mat-label>
+            <input matInput [(ngModel)]="miniFull.first_name" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-sm-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Nachname</mat-label>
+            <input matInput [(ngModel)]="miniFull.last_name" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" [(ngModel)]="miniFull.email" />
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Adresse</mat-label>
+            <input matInput [(ngModel)]="miniFull.Adresse" />
+          </mat-form-field>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Telefon</mat-label>
+            <input matInput [(ngModel)]="miniFull.Telefon" />
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Geburtstag</mat-label>
+            <input matInput [matDatepicker]="pickerGB" [(ngModel)]="miniFull.Geburtsdatum">
+            <mat-datepicker-toggle matSuffix [for]="pickerGB"></mat-datepicker-toggle>
+            <mat-datepicker #pickerGB></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Minityp</mat-label>
+            <mat-select [(ngModel)]="miniFull.MiniTyp">
+              <mat-option [value]="0">Obermini</mat-option>
+              <mat-option [value]="1">Mini</mat-option>
+              <mat-option [value]="2">Minimini</mat-option>
+              <mat-option [value]="3">Passiv</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Minidienststart</mat-label>
+            <input matInput [matDatepicker]="pickerMS" [(ngModel)]="miniFull.date_joined">
+            <mat-datepicker-toggle matSuffix [for]="pickerMS"></mat-datepicker-toggle>
+            <mat-datepicker #pickerMS></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Pate</mat-label>
+            <mat-select [(ngModel)]="miniFull.PateMini">
+              <mat-option [value]="null"></mat-option>
+              <mat-option *ngFor="let mini of miniService.MinisListInst" [value]="mini.id">{{mini|showMinis}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Anzahl Eingeteilt</mat-label>
+            <input matInput [(ngModel)]="miniFull.AnzahlEingeteilt" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <h3>Geschwister</h3>
+        <app-mini-auswahl [(minis)]="geschwister" [strict]="true"></app-mini-auswahl>
+      </div>
+
+      <div class="row">
+        <h2>Links der aktuellen Abfragen</h2>
+        <mat-list>
+            <mat-divider></mat-divider>
+            <mat-list-item role="listitem" *ngFor="let ab of miniFull.AbfrageAktiv">
+              {{planService.PlanListInst[ab.Plan]?.Name}}
+              <button mat-button color="primary" ngxClipboard cbContent="https://{{document.location.hostname}}/abfrage/main/{{ab.id}}/{{ab.Key}}/">Link kopieren</button>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+        </mat-list>
+      </div>
+
+      <p><button *ngIf="userService.has('api.change_mini')" mat-raised-button (click)="saveMini();" color="primary" >Speichern</button>
+        <button *ngIf="userService.has('api.delete_mini')" mat-raised-button color="warn" class="ms-2" (click)="miniLoeschen();" >Löschen</button></p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="m-2">
+  <h2>Einstellungen</h2>
+  <mat-tab-group>
+    <mat-tab label="Telegram">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-6 p-2">
+            <h3>Registrieren</h3>
+            <mat-form-field>
+              <mat-label>Secret Key</mat-label>
+              <input matInput [formControl]="secretKey" />
+            </mat-form-field>
+            <app-mini-auswahl [(minis)]="minis"></app-mini-auswahl>
+            <button mat-raised-button color="primary" (click)="setChatMinis();">Speichern</button>
+          </div>
+          <div class="col-md-6 p-2">
+            <h3>Bot Befehle</h3>
+            <mat-accordion>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <code>/start</code>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    Registrieren
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <p>Das zugesendete Passwort muss hier mit einem Mini verknüft werden.</p>
+              </mat-expansion-panel>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <code>/abo</code>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    Benachrichtigungen
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <p><code>/abo start</code> aktiviert die Benachrichtigungen</p>
+                <p><code>/abo stop</code> deaktiviert die Benachrichtigungen</p>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Einteilung">
+      <p class="m-3">Anzahl der Einteilungen für alle Minis zurücksetzen? <button mat-raised-button color="warn" (click)="resetAnzahl();">Zurücksetzen</button></p>
+      <mat-divider></mat-divider>
+      <h3>Statistik ohne Offset</h3>
+      <app-miniplan-statistik [real]="true"></app-miniplan-statistik>
+    </mat-tab>
+  </mat-tab-group>
+</div>

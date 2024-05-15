@@ -1,0 +1,60 @@
+
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.full {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.fullB {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+.useAvail {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.fullToolbar {
+  height: calc(100vh - 64px) !important;
+  width: 100% !important;
+}
+
+.fullSidebar {
+  height: 100%;
+  width: calc(100vw - 50px);
+}
+
+.hFull {
+  height: 100% !important;
+}
+
+.overflowHScroll {
+  overflow-y: scroll;
+}
+
+.blankLink {
+  color: black;
+  text-decoration: none;
+}
+
+.blankLink:hover {
+  color: black;
+}
+
+.bgMenu {
+  background-color: #dddddd;
+}
+
+a[routerLink] {
+  pointer-events: all;
+}
+
+a[href] {
+  pointer-events: all;
+}

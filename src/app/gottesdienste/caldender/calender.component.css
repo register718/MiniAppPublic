@@ -1,0 +1,18 @@
+.baseLine {
+    position: absolute;
+    top: calc(90% - 1em);
+    left: 10px;
+}
+
+.dateIcon {
+    width: 2em;
+    height: 2em;
+    text-align: center;
+    left: calc(90% - 1em);
+}
+
+.headLine {
+    position: absolute;
+    left: 10px;
+    top: 0px;
+}

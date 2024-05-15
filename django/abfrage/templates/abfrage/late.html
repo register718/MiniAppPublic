@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<p><b>Du bist leider zu spät. Die Abfrage ist schon vorbei.</b></p>
+<p>Du kannst an folgenden Messen eingeteilt werden:</p>
+<ul class="list-group">
+{% for m in messen %}
+<li class="list-group-item">
+    {{m.Datum|date:"l d.m.Y"}}, um
+    {% if m.Zeit == None %}
+        {{m.Art.Zeit}}
+    {% else %}
+        {{m.Zeit}}
+    {% endif %}
+    {% if m.Info != "" and m.Info != None %}
+    Info: {{m.Info}}
+    {% endif %}
+</li>
+{% endfor %}
+</ul>
+{% endblock content %}

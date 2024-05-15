@@ -1,0 +1,42 @@
+{
+    "/api": {
+        "target": "http://localhost:8000/",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    },
+    "/ws": {
+        "target": "http://localhost:8000/",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true,
+        "ws": true
+    },
+    "/frontend": {
+        "target":"http://localhost:8000/",
+        "secure":false,
+        "logLevel":"debug",
+        "changeOrigin": true
+    },
+
+    "/static": {
+        "target":"http://localhost:8000/",
+        "secure":false,
+        "logLevel":"debug",
+        "changeOrigin":true
+    },
+
+    "/app": {
+        "target":"http://localhost:8000/",
+        "secure":false,
+        "logLevel":"debug",
+        "changeOrigin":true
+    },
+
+    "/rest": {
+        "target":"http://localhost:8000/",
+        "secure":false,
+        "logLevel":"debug",
+        "changeOrigin":true
+    }
+}

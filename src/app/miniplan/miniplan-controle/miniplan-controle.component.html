@@ -1,0 +1,35 @@
+<h2>Miniplan {{planBase.Name}}</h2>
+<p>
+  <mat-form-field class="m-2">
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="planBase.Name" [disabled]="disabled" (change)="changedBase = true;" class="text-dark" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="m-2">
+  <mat-label>Start</mat-label>
+  <input matInput [matDatepicker]="pickerStart" [(ngModel)]="planBase.StartDatum" [disabled]="disabled" (dateChange)="changedBase=true;" class="text-dark">
+  <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+  <mat-datepicker #pickerStart></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field appearance="fill" class="m-2">
+  <mat-label>Ende</mat-label>
+  <input matInput [matDatepicker]="pickerEnde" [(ngModel)]="planBase.EndDatum" [disabled]="disabled" class="text-dark" (dateChange)="changedBase=true;">
+  <mat-datepicker-toggle matSuffix [for]="pickerEnde"></mat-datepicker-toggle>
+  <mat-datepicker #pickerEnde></mat-datepicker>
+</mat-form-field>
+
+</p>
+<div class="p-3">
+  <button mat-raised-button (click)="einteilen.emit();" *ngIf="planBase.PlanArt==0 &&  userService.has(['api.view_plan', 'api.view_messe', 'api.view_gruppe', 'api.add_gruppe'])">Einteilen</button>
+  <button mat-raised-button color="primary" class="ms-2" (click)="speicherPlan();" *ngIf="userService.has(['api.change_gruppe', 'api.add_gruppe']) || userService.has('api.change_plan')">Speichern</button>
+<ng-container *ngIf="userService.has(['api.view_plan', 'api.view_messe', 'api.view_gruppe', 'api.view_messeart'])">
+    <button class="btn btn-success ms-2" [matMenuTriggerFor]="menu">Export</button>
+    <mat-menu #menu="matMenu">
+      <a target="_blank" [href]="'/api/plan/download/' + planBase.id.toString() + '.pdf?mode=standart'"><button mat-menu-item>Download</button></a>
+      <a><button mat-menu-item ngxClipboard cbContent="https://{{document.location.hostname}}/api/plan/download/{{planBase.id.toString()}}.pdf?key={{planBase.LinkKey}}" >Link Plan</button></a>
+    </mat-menu>
+</ng-container>
+  <button class="btn btn-danger ms-2" (click)="archivieren();" *ngIf="userService.has('api.delete_plan')">Archivieren</button>
+  <button *ngIf="planBase.PlanArt === 1 && userService.has('api.change_plan')" type="button" class="btn btn-warning ms-2" (click)="abfrage();">Starte Abfrage</button>
+</div>

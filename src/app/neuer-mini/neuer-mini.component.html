@@ -1,0 +1,75 @@
+<div class="m-2">
+  <h2>Mini hinzufügen</h2>
+  <mat-stepper [linear]="true" #stepper>
+    <!--Persönliche Daten-->
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Persönliche Daten eingeben</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Vorname</mat-label>
+          <input matInput placeholder="Vorname" formControlName="first_name" required id="first_name">
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="ms-1">
+          <mat-label>Nachname</mat-label>
+          <input matInput placeholder="Nachname" formControlName="last_name" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Geburtstag</mat-label>
+          <input matInput [matDatepicker]="pickerGB" formControlName="geburststdatum">
+          <mat-datepicker-toggle matSuffix [for]="pickerGB"></mat-datepicker-toggle>
+          <mat-datepicker #pickerGB></mat-datepicker>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Weiter</button>
+        </div>
+      </form>
+    </mat-step>
+    <!--Kontaktdaten-->
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Kontaktdaten</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="Email" formControlName="email" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Adresse</mat-label>
+          <input matInput placeholder="Adresse" formControlName="adresse" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Telefon</mat-label>
+          <input matInput placeholder="Telefon" formControlName="telefon" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Zurück</button>
+          <button mat-button matStepperNext>Weiter</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="thirdFormGroup">
+      <form [formGroup]="thirdFormGroup">
+        <ng-template matStepLabel>Mini</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Minityp</mat-label>
+          <mat-select formControlName="miniTyp">
+            <mat-option [value]="0">Obermini</mat-option>
+            <mat-option [value]="1">Mini</mat-option>
+            <mat-option [value]="2">Minimini</mat-option>
+            <mat-option [value]="3">Passiv</mat-option>
+            <mat-option [value]="4">Verwalter</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+        <app-mini-auswahl [strict]="true" [(minis)]="geschwister"></app-mini-auswahl>
+        <div>
+          <button mat-button matStepperPrevious>Zurück</button>
+          <button mat-raised-button color="primary" (click)="speicherMini();">Speichern</button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-stepper>
+  <!--<button (click)="speicherMini();">Sp</button>-->
+</div>

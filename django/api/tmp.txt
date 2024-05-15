@@ -1,0 +1,12 @@
+Liebe(r) {mini.user.first_name},
+
+hier (https://{MY_HOST}/abfrage/main/{abfrage.id}/{abfrage.Key}/) kannst du bis zum {ende} gerne auswählen, bei welchen Gottesdiensten du ministrieren möchtest.
+
+"Kleiner Tipp": Falls du in dem ganzen Zeitraum von {startPlan} bis {endePlan}  ministrieren könntest, musst du dir keine weiteren Gedanken über die Abfrage machen. 
+Du musst also nicht den Link öffnen und keine Gottesdienste auswählen, das übernehmen wir für dich ;)
+
+Bitte erledige die Abfrage gegebenfalls bis zum {ende}, sonst trifft der "Kleine Tipp" auf dich zu...
+
+Viel Spaß beim Ankreuzen!
+Viele liebe Grüße
+Deine Oberminis :)

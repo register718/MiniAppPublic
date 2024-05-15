@@ -1,0 +1,94 @@
+<div class="container-fulid full" style="margin: 0; overflow-y: scroll; overflow-x: hidden;">
+<app-miniplan-controle [planBase]="MiniplanBase" class="row" style="overflow: hidden;">
+</app-miniplan-controle>
+
+<p><mat-progress-bar *ngIf="Messen.length !== MiniplanBase.AnzahlMessen" mode="determinate" [value]="(Messen.length / MiniplanBase.AnzahlMessen) * 100"></mat-progress-bar></p>
+<mat-tab-group *ngIf="userService.has('api.view_messe')" class="full">
+  <mat-tab label="Plan">
+    <div class="m-3">
+      <ng-container *ngFor="let messe_id of Messen">
+        <h2>
+          {{gdService.gd_List_Inst[messe_id]?.Datum|showDate}}-{{gdService.getTextDay(gdService.gd_List_Inst[messe_id]?.Datum)}} {{gdService.gd_List_Inst[messe_id]?.Info}}
+          <ng-container *ngIf="gdService.gd_List_Inst[messe_id]?.Zeit == null; else zeitAnzeige;">
+            {{gdService.gd_Art_List_Inst[gdService.gd_List_Inst[messe_id]?.Art]?.Zeit}}
+          </ng-container><ng-template #zeitAnzeige>{{gdService.gd_List_Inst[messe_id].Zeit}}</ng-template>
+          Uhr
+        </h2>
+        <sub *ngIf="userService.has('api.view_messeart') && gdService.gd_Art_List_Inst[gdService.gd_List_Inst[messe_id]?.Art] != undefined">
+          {{gdService.gd_Art_List_Inst[gdService.gd_List_Inst[messe_id].Art].MinisInsgesamt}} Minis insgesamt, davon
+          {{gdService.gd_Art_List_Inst[gdService.gd_List_Inst[messe_id].Art].OberminisAnzahl}} Oberminis
+        </sub>
+       <div *ngIf="userService.has('api.view_gruppe')">
+          <ng-container *ngFor="let gruppe_id of getGruppenVonMesse(messe_id); trackBy trackByToggleIDs;">
+            <mat-button-toggle-group multiple>
+              <mat-button-toggle
+                (change)="miniplanService.ws_setEinteilen(gruppe_id, $event.source.checked)"
+                [ngClass]="{'grayBg':Messe_Minis[messe_id][gruppe_id].Eingeteilt}"
+                [disabled]="!userService.has(['api.change_gruppe', 'api.add_gruppe'])"
+                [matTooltip]="generateTooltip(Messe_Minis[messe_id][gruppe_id].Minis[0])|showMinis"
+                >
+                {{Messe_Minis[messe_id][gruppe_id].Minis|showMinis}}
+              </mat-button-toggle>
+            </mat-button-toggle-group>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+  </mat-tab>
+  <mat-tab label="Rückmeldungen" *ngIf="userService.has('api.view_gruppe')">
+    <div class="m-3">
+      <p>
+        <mat-form-field appearance="fill">
+          <mat-label>Suche...</mat-label>
+          <input matInput #searchEntry (input)="sortData(null, searchEntry.value);" />
+        </mat-form-field>
+      </p>
+      <table matSort #rueckmeldungTable (matSortChange)="sortData($event, searchEntry.value)">
+        <tr class="sticky-top bg-white">
+          <th mat-sort-header="normal">No.</th>
+          <th mat-sort-header="Name">Name</th>
+          <th>Alle</th>
+          <th *ngFor="let gd of  Messen" mat-sort-header="{{gd}}">
+            {{gdService.gd_List_Inst[gd]?.Datum|showDate}}</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th *ngFor="let gd of  Messen" style="max-width: 100px;" class="overflow-hidden text-nowrap">
+            {{gdService.gd_List_Inst[gd]?.Info}}
+          </th>
+        </tr>
+
+        <ng-container *ngFor="let mini of sortedMinis; index as i;">
+          <tr [ngClass]="['grayHover']">
+            <th>{{i + 1}}</th>
+            <th [ngClass]="{'opacity-50':mini.MiniTyp == 3}">{{mini|showMinis}}</th>
+            <th>
+              <mat-icon *ngIf="userService.has(['api.change_gruppe', 'api.add_gruppe'])" [matMenuTriggerFor]="menu">edit</mat-icon>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="checkAll(mini.id, true);">Kann</button>
+                <button mat-menu-item (click)="checkAll(mini.id, false);">Kann nicht</button>
+                <button mat-menu-item (click)="checkInvert(mini.id);">Invertieren</button>
+              </mat-menu>
+            </th>
+            <th *ngFor="let gd of Messen; index as idx;">
+              <mat-checkbox [checked]="getMiniKann(idx, mini.id)"
+                (change)="checkMinisMesseChanged(mini.id, gd, $event.checked);"
+                [disabled]="!userService.has(['api.change_gruppe', 'api.add_gruppe'])"></mat-checkbox>
+            </th>
+          </tr>
+        </ng-container>
+      </table>
+    </div>
+  </mat-tab>
+  <mat-tab label="Statistik" *ngIf="userService.has('api.view_gruppe');">
+    <div class="m-3">
+      <app-miniplan-statistik [Miniplan]="MiniplanBase"></app-miniplan-statistik>
+    </div>
+  </mat-tab>
+  <mat-tab label="Nachrichten" *ngIf="userService.has('api.view_abfrage')">
+    <app-miniplan-nachrichten-anzeige *ngIf="renderNachrichten"></app-miniplan-nachrichten-anzeige>
+  </mat-tab>
+</mat-tab-group>
+</div>

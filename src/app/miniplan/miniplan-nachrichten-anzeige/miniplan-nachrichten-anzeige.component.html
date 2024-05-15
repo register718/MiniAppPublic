@@ -1,0 +1,8 @@
+<ng-container *ngFor="let n of Nachrichten">
+    <mat-card class="m-2 p-2">
+        <h4>{{n.Mini|showMinis}}</h4>
+        <p>{{n.Nachricht}}</p>
+    </mat-card>
+    <br>
+</ng-container>
+<h2 class="m-2" *ngIf="Nachrichten.length === 0">Keine Nachrichten für diesen Plan</h2>

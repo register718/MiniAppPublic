@@ -1,0 +1,21 @@
+
+<h2 class="m-2">Miniplan Editor</h2>
+
+<div class="container-fluid full m-3">
+  <div class="row">
+    <p>
+      <button mat-raised-button (click)="btnTexSpeichern();" class="ms-2" color="primary">Speichern</button>
+      <button (click)="loadTex(false)" class="ms-2" mat-raised-button color="warn">Reset</button>
+      <a target="blank" [href]="'api/plan/download/' + planBase?.id.toString() + '.pdf?mode=edit'"><button class="ms-2 btn btn-success">Download</button></a>
+    </p>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row full">
+    <div class="col-lg-6">
+      
+    </div>
+    <div class="col-6">
+        <app-pdf [URL]="pdfSource"></app-pdf>
+    </div>
+  </div>
+</div>

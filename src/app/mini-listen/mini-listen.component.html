@@ -1,0 +1,63 @@
+<div class="container-fluid m-2" style="height: 100%;">
+  <div class="row" style="height: 100%;">
+    <div class="col-lg-6" *ngIf="!manHidden || window.innerWidth >= 999">
+      <div class="container-fluid">
+        <div class="row">
+          <h2>Minilisten</h2>
+        </div>
+        <div class="row">
+          <mat-form-field appearance="fill">
+            <mat-label>Titel</mat-label>
+            <input matInput [(ngModel)]="title" />
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Sortierung</mat-label>
+            <mat-select [(ngModel)]="sort">
+              <mat-option [value]="-1">Ohne</mat-option>
+              <mat-option [value]="0">Name</mat-option>
+              <mat-option [value]="1">Typ</mat-option>
+              <mat-option [value]="2">Geburtsdatum</mat-option>
+              <mat-option [value]="3">Dienststart</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Filter</mat-label>
+            <mat-select multiple [formControl]="filter">
+                <mat-option [value]="0">Oberminis</mat-option>
+                <mat-option [value]="1">Minis</mat-option>
+                <mat-option [value]="2">Miniminis</mat-option>
+                <mat-option [value]="3">Passiv</mat-option>
+
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Anzahl zusätzlicher Spalten</mat-label>
+            <input matInput type="number" [(ngModel)]="anzahlEmty">
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-checkbox  [(ngModel)]="idx">Nummerierung</mat-checkbox>
+          <mat-checkbox  [(ngModel)]="name">Name</mat-checkbox>
+          <mat-checkbox  [(ngModel)]="typ">Typ</mat-checkbox>
+          <mat-checkbox  [(ngModel)]="adresse">Adresse</mat-checkbox>
+          <mat-checkbox  [(ngModel)]="telefon">Telefon</mat-checkbox>
+          <mat-checkbox  [(ngModel)]="gb">Geburtsdatum</mat-checkbox>
+          <mat-checkbox  [(ngModel)]="email">Email</mat-checkbox>
+          <mat-checkbox  [(ngModel)]="start">Dienst Start</mat-checkbox>
+        </div>
+        <div class="row">
+          <div class="col-12 m-2">
+            <button mat-raised-button color="primary" (click)="reloadPDF()">Neu laden</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div [ngClass]="{'col-6': window.innerWidth >= 999}" *ngIf="window.innerWidth < 999 && manHidden || window.innerWidth >= 999">
+      <button *ngIf="window.innerWidth < 999" mat-stroked-button (click)="manHidden=false;" >Zurück</button>
+      <app-pdf class="full" [URL]="url"></app-pdf>
+    </div>
+  </div>
+</div>

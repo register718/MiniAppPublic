@@ -1,0 +1,15 @@
+<div class="container-fluid full m-2">
+  <div class="row">
+    <a target="_blank" [href]="currentUrl"><button mat-raised-button color="primary">Download</button></a>
+  </div>
+  <div class="row full">
+    <pdf-viewer [src]="currentUrl"
+        [render-text]="true"
+        [fit-to-page]="true"
+        [original-size]="false"
+        [show-borders]="true"
+        class="full"
+    ></pdf-viewer>
+  </div>
+</div>
+

@@ -1,0 +1,23 @@
+<h2>Statistik</h2>
+<p>
+  <button mat-raised-button color="primary" (click)="reload();" matTooltip="Für aktuelle Statistik erst speichern">Berechnen</button>
+</p>
+<table  matSort (matSortChange)="sortData($event);">
+  <tr>
+    <th mat-sort-header="id">ID</th>
+    <th mat-sort-header="vorname">Vorname</th>
+    <th mat-sort-header="nachname">Nachname</th>
+    <th mat-sort-header="anzahl">Anzahl</th>
+    <th mat-sort-header="insgesamt">Anzahl Insgesamt</th>
+  </tr>
+
+  <tr *ngFor="let mini of sortedData">
+    <ng-container *ngIf="mini.MiniTyp <= 2 || Miniplan == null">
+      <td class="pe-1">{{mini.id}}</td>
+      <td class="pe-4">{{mini.first_name}}</td>
+      <td class="pe-4">{{mini.last_name}}</td>
+      <td>{{MiniList[mini.id] == undefined ? 0 : MiniList[mini.id].AnzahlPlan}}</td>
+      <td>{{MiniList[mini.id] == undefined ? 0 : MiniList[mini.id].AnzahlTotal}}</td>
+    </ng-container>
+  </tr>
+</table>
