@@ -162,7 +162,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 # Telegram
-Telegram_API_KEY = '5320827019:AAHGcB28A5ssr47JNtZnKEOrZIkNik6YbuQ'
+Telegram_API_KEY = ''
 
 
 ## Logging
